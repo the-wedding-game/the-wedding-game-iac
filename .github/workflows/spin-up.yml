@@ -58,6 +58,13 @@ jobs:
         run: |
           echo "Terraform plan exit code: ${{ steps.plan.outputs.exitcode }}"
 
+      - name: Upload Terraform Plan
+        if: steps.plan.exitcode == 2 || steps.plan.exitcode == 0
+        uses: actions/upload-artifact@v4
+        with:
+          name: terraform-plan
+          path: plan.out
+
   apply:
     name: Apply Terraform Deployment
     runs-on: ubuntu-latest
