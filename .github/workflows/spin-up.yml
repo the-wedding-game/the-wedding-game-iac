@@ -53,7 +53,6 @@ jobs:
             -var="db_name=${{ env.DB_NAME }}" \
             -out=plan.out \
             -detailed-exitcode
-        continue-on-error: true
 
       - name: Echo Terraform Plan Exit Code
         run: |
@@ -65,12 +64,6 @@ jobs:
         with:
           name: terraform-plan
           path: plan.out
-
-      - name: Fail if Plan has Error
-        if: steps.plan.exitcode == 1
-        run: |
-          echo "Terraform plan failed!"
-          exit 1
 
   apply:
     name: Apply Terraform Deployment
