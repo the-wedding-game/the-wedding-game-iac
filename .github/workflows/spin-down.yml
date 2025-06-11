@@ -5,6 +5,8 @@ on:
       image-hash:
         description: 'Image hash to use'
         required: true
+  schedule:
+    - cron: '0 * * * *'
 
 env:
   DB_PASS: postgres
@@ -13,8 +15,8 @@ env:
 
 jobs:
 
-  plan-and-apply:
-    name: Plan & Apply Terraform Deployment
+  plan-and-destroy:
+    name: Plan & Destroy Terraform Deployment
     runs-on: ubuntu-latest
 
     steps:
@@ -43,14 +45,14 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: |
-          terraform plan \
+          terraform plan -destroy \
             -no-color \
             -input=false \
             -var="image_hash=${{ github.event.inputs.image-hash }}" \
             -var="db_pass=${{ env.DB_PASS }}" \
             -var="db_user=${{ env.DB_USER }}" \
             -var="db_name=${{ env.DB_NAME }}" \
-            -out=create-plan.out \
+            -out=destroy-plan.out \
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -input=false create-plan.out
+        run: terraform apply -auto-approve -input=false destroy-plan.out
