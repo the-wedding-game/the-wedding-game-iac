@@ -1,12 +1,12 @@
 resource "aws_db_instance" "the-wedding-game-db" {
-  identifier                = "the-wedding-game-db2"
-  instance_class            = "db.t4g.micro"
-  engine                    = "postgres"
-  engine_version            = "17.2"
-  allocated_storage         = 10
-  apply_immediately         = true
-  username                  = var.db_user
-  password                  = var.db_pass
+  identifier        = "the-wedding-game-db2"
+  instance_class    = "db.t4g.micro"
+  engine            = "postgres"
+  engine_version    = "17.2"
+  allocated_storage = 10
+  apply_immediately = true
+  username          = var.db_user
+  password          = var.db_pass
   # db_name                   = var.db_name
   vpc_security_group_ids    = [aws_security_group.connect_to_postgres.id]
   db_subnet_group_name      = aws_db_subnet_group.the-wedding-game-db-subnet-group.name
