@@ -3,16 +3,16 @@ variable "image_hash" {
 }
 
 variable "db_pass" {
-  type = string
+  type    = string
   default = "postgres"
 }
 
 variable "db_user" {
-  type = string
+  type    = string
   default = "postgres"
 }
 
 variable "db_name" {
-  type = string
+  type    = string
   default = "postgres"
 }
