@@ -1,0 +1,81 @@
+[
+  {
+    "name": "the-wedding-game-api",
+    "image": "registry.hub.docker.com/kaneeldias/the-wedding-game-api:6ac433b8fbd8bd1ef28ebe3ade77d278df7112aa",
+    "cpu": 0,
+    "portMappings": [
+      {
+        "name": "the-wedding-game-api-8080-tcp",
+        "containerPort": 8080,
+        "hostPort": 8080,
+        "protocol": "tcp",
+        "appProtocol": "http"
+      }
+    ],
+    "essential": true,
+    "environment": [
+      {
+        "name": "AWS_FOLDER_NAME",
+        "value": "testing-folder"
+      },
+      {
+        "name": "AWS_REGION",
+        "value": "eu-west-1"
+      },
+      {
+        "name": "ADMIN_PASSWORD",
+        "value": "abcd@123"
+      },
+      {
+        "name": "AWS_BUCKET_NAME",
+        "value": "the-wedding-game"
+      },
+      {
+        "name": "DB_PASS",
+        "value": "postgres"
+      },
+      {
+        "name": "DB_PORT",
+        "value": "5432"
+      },
+      {
+        "name": "GIN_MODE",
+        "value": "release"
+      },
+      {
+        "name": "DB_USER",
+        "value": "postgres"
+      },
+      {
+        "name": "DB_NAME",
+        "value": "postgres"
+      },
+      {
+        "name": "ENV",
+        "value": "production"
+      },
+      {
+        "name": "DB_HOST",
+        "value": "{{DB_HOST}}"
+      },
+      {
+        "name": "AWS_BUCKET_ENDPOINT",
+        "value": "https://s3.eu-west-1.amazonaws.com"
+      }
+    ],
+    "mountPoints": [],
+    "volumesFrom": [],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "/ecs/the-wedding-game-api",
+        "mode": "non-blocking",
+        "awslogs-create-group": "true",
+        "max-buffer-size": "25m",
+        "awslogs-region": "eu-west-1",
+        "awslogs-stream-prefix": "ecs"
+      }
+    },
+    "systemControls": []
+  }
+]
