@@ -65,13 +65,13 @@ jobs:
             -out=destroy-plan.out \
 
       - name: Convert Plan to JSON
-        run: terraform show -json plan.out > plan.json
+        run: terraform show -json destrpy-plan.out > destroy-plan.json
 
       - name: Install Checkov
         run: pip install checkov
 
       - name: Run Checkov on Plan
-        run: checkov -f plan.json --quiet
+        run: checkov -f destroy-plan.json --quiet
 
       - name: Terraform Apply
         run: terraform apply -auto-approve -input=false destroy-plan.out
