@@ -12,7 +12,7 @@ resource "aws_lb" "the-wedding-game-api-lb" {
 }
 
 resource "aws_lb_target_group" "the-wedding-game-api-ecs-target-group" {
-  name        = "ecs-target-group"
+  name        = "the-wedding-game-tg"
   port        = 8080
   protocol    = "HTTP"
   target_type = "ip"

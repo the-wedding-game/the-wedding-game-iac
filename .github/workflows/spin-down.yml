@@ -1,4 +1,4 @@
-name: Terraform deployment
+name: Terraform destroy
 on:
   workflow_dispatch:
     inputs:
@@ -7,6 +7,7 @@ on:
         required: true
   schedule:
     - cron: '0 * * * *'
+
 
 env:
   DB_PASS: postgres
@@ -37,7 +38,11 @@ jobs:
         run: terraform fmt -check
 
       - name: Terraform Init
-        run: terraform init
+        run: |
+          terraform init \
+            -backend-config="${{ secrets.TF_STATE_BUCKET }}" \
+            -backend-config="key=terraform/state/terraform.tfstate" \
+            -backend-config="region=eu-west-1"
 
       - name: Terraform Validate
         run: terraform validate -no-color

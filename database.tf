@@ -60,6 +60,7 @@ resource "aws_db_subnet_group" "the-wedding-game-db-subnet-group" {
 }
 
 resource "aws_db_parameter_group" "the-wedding-game-db-parameter-group" {
+  name        = "the-wedding-game-db-parameter-group"
   family      = "postgres17"
   description = "Custom parameter group for the-wedding-game database"
   parameter {
