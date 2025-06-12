@@ -2,9 +2,10 @@ resource "aws_ecs_task_definition" "the-wedding-game-api-task-definition" {
   family = "the-wedding-game-api-task-definition-family"
   container_definitions = jsonencode([
     {
-      name  = "the-wedding-game-api"
-      image = "registry.hub.docker.com/kaneeldias/the-wedding-game-api:${var.image_hash}"
-      cpu   = 0
+      name                   = "the-wedding-game-api"
+      image                  = "registry.hub.docker.com/kaneeldias/the-wedding-game-api:${var.image_hash}"
+      cpu                    = 0
+      readonlyRootFilesystem = true
       portMappings = [
         {
           name          = "the-wedding-game-api-8080-tcp"

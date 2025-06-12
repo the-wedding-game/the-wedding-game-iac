@@ -1,5 +1,8 @@
 name: Continuous Integration
 
+permissions:
+  contents: read
+
 on:
   pull_request:
     branches:
@@ -7,9 +10,6 @@ on:
   push:
     branches:
       - main
-
-permissions:
-  contents: read
 
 jobs:
   build-and-test:
@@ -48,4 +48,4 @@ jobs:
         run: pip install checkov
 
       - name: Run Checkov
-        run: checkov -d .
+        run: checkov -d . --quiet
