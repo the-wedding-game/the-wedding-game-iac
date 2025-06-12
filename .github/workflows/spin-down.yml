@@ -41,7 +41,7 @@ jobs:
         run: |
           terraform init \
             -backend-config="${{ secrets.TF_STATE_BUCKET }}" \
-            -backend-config="key=terraform/state/terraform.tfstate" 
+            -backend-config="key=terraform/state/terraform.tfstate" \
             -backend-config="region=eu-west-1"
 
       - name: Terraform Validate
