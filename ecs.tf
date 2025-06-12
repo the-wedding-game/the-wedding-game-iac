@@ -1,5 +1,9 @@
 resource "aws_ecs_cluster" "the-wedding-game-ecs-cluster" {
   name = "the-wedding-game-ecs-cluster"
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 
   tags = {
     Project = "the-wedding-game"
@@ -17,7 +21,7 @@ resource "aws_ecs_service" "the-wedding-game-ecs-service-api" {
   network_configuration {
     subnets          = [aws_subnet.the-wedding-game-public-subnet_1.id, aws_subnet.the-wedding-game-public-subnet_2.id]
     security_groups  = [aws_security_group.the-wedding-group-api-sg.id]
-    assign_public_ip = true
+    assign_public_ip = false
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.the-wedding-game-api-ecs-target-group.arn
@@ -44,6 +48,7 @@ resource "aws_security_group" "the-wedding-group-api-sg" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "accept-on-8080" {
+  description       = "Allow incoming connections on port 8080 from anywhere"
   security_group_id = aws_security_group.the-wedding-group-api-sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 8080
@@ -57,6 +62,7 @@ resource "aws_vpc_security_group_ingress_rule" "accept-on-8080" {
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_on_443" {
+  description       = "Allow outgoing connections on 443 from anywhere"
   security_group_id = aws_security_group.the-wedding-group-api-sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 443
@@ -70,6 +76,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_on_443" {
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_on_5432" {
+  description       = "Allow outgoing connections on 5432 from anywhere"
   security_group_id = aws_security_group.the-wedding-group-api-sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 5432

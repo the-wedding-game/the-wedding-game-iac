@@ -1,4 +1,9 @@
 name: Terraform deployment
+#checkov:skip=CKV_GHA_7: I need the parameter `image-hash` to be passed in manually,
+
+permissions:
+  contents: read
+
 on:
   workflow_dispatch:
     inputs:
@@ -55,6 +60,15 @@ jobs:
             -var="db_user=${{ env.DB_USER }}" \
             -var="db_name=${{ env.DB_NAME }}" \
             -out=create-plan.out \
+
+      - name: Convert Plan to JSON
+        run: terraform show -json plan.out > plan.json
+
+      - name: Install Checkov
+        run: pip install checkov
+
+      - name: Run Checkov on Plan
+        run: checkov -f plan.json --quiet
 
       - name: Terraform Apply
         run: terraform apply -auto-approve -input=false create-plan.out
