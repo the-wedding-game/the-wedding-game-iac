@@ -56,5 +56,5 @@ jobs:
             -var="db_name=${{ env.DB_NAME }}" \
             -out=create-plan.out \
 
-#      - name: Terraform Apply
-#        run: terraform apply -auto-approve -input=false create-plan.out
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -input=false create-plan.out
