@@ -37,7 +37,7 @@ resource "aws_ecs_service" "the-wedding-game-ecs-service-api" {
 }
 
 resource "aws_security_group" "the-wedding-game-api-sg" {
-  name        = "the-wedding-group-api-sg"
+  name        = "the-wedding-game-api-sg"
   description = "Accepts connections on 8080. Allows on 443."
   vpc_id      = aws_vpc.the-wedding-game-vpc.id
 
@@ -76,7 +76,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_on_443" {
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_on_5432" {
-  description       = "Allow outgoing connections on 5432 from anywhere"
+  description       = "Allow outgoing connections on 5432 to rds postgres database"
   security_group_id = aws_security_group.the-wedding-game-api-sg.id
   referenced_security_group_id = aws_security_group.connect_to_postgres.id
   from_port         = 5432
