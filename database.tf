@@ -69,7 +69,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_on_5432" {
 }
 
 resource "aws_db_subnet_group" "the-wedding-game-db-subnet-group" {
-  name = "the-wedding-game-db-subnet-group"
+  name       = "the-wedding-game-db-subnet-group"
   subnet_ids = [aws_subnet.the-wedding-game-public-subnet_1.id, aws_subnet.the-wedding-game-public-subnet_2.id]
 
   tags = {
@@ -83,7 +83,7 @@ resource "aws_db_parameter_group" "the-wedding-game-db-parameter-group" {
   family      = "postgres17"
   description = "Custom parameter group for the-wedding-game database"
   parameter {
-    name  = "rds.force_ssl"
+    name = "rds.force_ssl"
     //TODO enable force ssl
     value = 0
   }
