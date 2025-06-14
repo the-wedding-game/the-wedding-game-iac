@@ -5,7 +5,7 @@ resource "aws_acm_certificate" "api-wedding-game-kaneel-net-cert" {
 
   tags = {
     Project = "the-wedding-game"
-    Name    = "api-wedding-game-kaneel-net-cert"
+    Name    = "the-wedding-game-kaneel-net-cert"
   }
 
   lifecycle {

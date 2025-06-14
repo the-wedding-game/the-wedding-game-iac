@@ -21,7 +21,8 @@ resource "aws_ecs_service" "the-wedding-game-ecs-service-api" {
   network_configuration {
     subnets          = [aws_subnet.the-wedding-game-public-subnet_1.id, aws_subnet.the-wedding-game-public-subnet_2.id]
     security_groups  = [aws_security_group.the-wedding-group-api-sg.id]
-    assign_public_ip = false
+    //TODO: make assign public ip false. Route through NAT
+    assign_public_ip = true
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.the-wedding-game-api-ecs-target-group.arn
@@ -62,7 +63,7 @@ resource "aws_vpc_security_group_ingress_rule" "accept-on-8080" {
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_on_443" {
-  description       = "Allow outgoing connections on 443 from anywhere"
+  description       = "Allow outgoing connections on 443 to anywhere"
   security_group_id = aws_security_group.the-wedding-group-api-sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 443
@@ -87,5 +88,4 @@ resource "aws_vpc_security_group_egress_rule" "allow_on_5432" {
     Project = "the-wedding-game"
     Name    = "the-wedding-game-sg-egress-rule-5432"
   }
-
 }

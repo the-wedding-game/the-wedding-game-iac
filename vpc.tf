@@ -26,6 +26,11 @@ resource "aws_default_security_group" "the-wedding-game-default-sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Project = "the-wedding-game"
+    Name    = "the-wedding-game-default-sg"
+  }
 }
 
 resource "aws_subnet" "the-wedding-game-public-subnet_1" {
