@@ -1,0 +1,19 @@
+metadata:
+  id: "THE_WEDDING_GAME_TAG_POLICY"
+  name: "Ensure all resources have the Project and Name tags"
+  category: "tagging"
+  severity: "HIGH"
+definition:
+  and:
+    - cond_type: "attribute"
+      resource_types:
+        - "taggable"
+      attribute: "tags.Project"
+      operator: "equals"
+      value: "the-wedding-game"
+    - cond_type: "attribute"
+      resource_types:
+        - "taggable"
+      attribute: "tags.Name"
+      operator: "starting_with"
+      value: "the-wedding-game-"

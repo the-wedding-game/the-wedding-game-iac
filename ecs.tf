@@ -19,7 +19,7 @@ resource "aws_ecs_service" "the-wedding-game-ecs-service-api" {
   launch_type             = "FARGATE"
   enable_ecs_managed_tags = true
   network_configuration {
-    subnets          = [aws_subnet.the-wedding-game-public-subnet_1.id, aws_subnet.the-wedding-game-public-subnet_2.id]
+    subnets          = [aws_subnet.the-wedding-game-private-subnet_1.id]
     security_groups  = [aws_security_group.the-wedding-group-api-sg.id]
     assign_public_ip = false
   }
@@ -48,12 +48,12 @@ resource "aws_security_group" "the-wedding-group-api-sg" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "accept-on-8080" {
-  description       = "Allow incoming connections on port 8080 from anywhere"
-  security_group_id = aws_security_group.the-wedding-group-api-sg.id
-  cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 8080
-  ip_protocol       = "tcp"
-  to_port           = 8080
+  description                  = "Allow incoming connections on port 8080 from the ELB"
+  security_group_id            = aws_security_group.the-wedding-group-api-sg.id
+  from_port                    = 8080
+  ip_protocol                  = "tcp"
+  to_port                      = 8080
+  referenced_security_group_id = aws_security_group.the-wedding-game-api-elb-sg.id
 
   tags = {
     Project = "the-wedding-game"
@@ -62,7 +62,7 @@ resource "aws_vpc_security_group_ingress_rule" "accept-on-8080" {
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_on_443" {
-  description       = "Allow outgoing connections on 443 from anywhere"
+  description       = "Allow outgoing connections on 443 to anywhere"
   security_group_id = aws_security_group.the-wedding-group-api-sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 443
@@ -87,5 +87,4 @@ resource "aws_vpc_security_group_egress_rule" "allow_on_5432" {
     Project = "the-wedding-game"
     Name    = "the-wedding-game-sg-egress-rule-5432"
   }
-
 }

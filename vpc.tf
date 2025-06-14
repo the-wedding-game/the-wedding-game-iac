@@ -26,6 +26,11 @@ resource "aws_default_security_group" "the-wedding-game-default-sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Project = "the-wedding-game"
+    Name    = "the-wedding-game-default-sg"
+  }
 }
 
 resource "aws_subnet" "the-wedding-game-public-subnet_1" {
@@ -83,4 +88,52 @@ resource "aws_route_table_association" "the-wedding-game-rta_1" {
 resource "aws_route_table_association" "the-wedding-game-rta_2" {
   subnet_id      = aws_subnet.the-wedding-game-public-subnet_2.id
   route_table_id = aws_route_table.the-wedding-game-rt.id
+}
+
+resource "aws_subnet" "the-wedding-game-private-subnet_1" {
+  vpc_id                  = aws_vpc.the-wedding-game-vpc.id
+  cidr_block              = "10.0.3.0/24"
+  map_public_ip_on_launch = false
+  availability_zone       = "eu-west-1a"
+
+  tags = {
+    Project = "the-wedding-game"
+    Name    = "the-wedding-game-subnet"
+  }
+}
+
+resource "aws_route_table" "the-wedding-game-private-rt" {
+  vpc_id = aws_vpc.the-wedding-game-vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.the-wedding-game-nat-gw-1.id
+  }
+
+  tags = {
+    Project = "the-wedding-game"
+    Name    = "the-wedding-game-rt"
+  }
+}
+
+resource "aws_route_table_association" "the-wedding-game-private-rta_1" {
+  subnet_id      = aws_subnet.the-wedding-game-private-subnet_1.id
+  route_table_id = aws_route_table.the-wedding-game-private-rt.id
+}
+
+resource "aws_eip" "the-wedding-game-nat-eip" {
+  tags = {
+    Project = "the-wedding-game"
+    Name    = "the-wedding-game-nat-eip"
+  }
+}
+
+resource "aws_nat_gateway" "the-wedding-game-nat-gw-1" {
+  allocation_id = aws_eip.the-wedding-game-nat-eip.id
+  subnet_id     = aws_subnet.the-wedding-game-public-subnet_1.id
+
+  tags = {
+    Project = "the-wedding-game"
+    Name    = "the-wedding-game-nat-gw"
+  }
 }
