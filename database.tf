@@ -56,12 +56,12 @@ resource "aws_security_group" "connect_to_postgres" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_on_5432" {
-  description       = "Allow connections on port 5432 from api security group"
-  security_group_id = aws_security_group.connect_to_postgres.id
+  description                  = "Allow connections on port 5432 from api security group"
+  security_group_id            = aws_security_group.connect_to_postgres.id
   referenced_security_group_id = aws_security_group.the-wedding-game-api-sg.id
-  from_port         = 5432
-  ip_protocol       = "tcp"
-  to_port           = 5432
+  from_port                    = 5432
+  ip_protocol                  = "tcp"
+  to_port                      = 5432
 
   tags = {
     Project = "the-wedding-game"

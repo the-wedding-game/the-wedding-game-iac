@@ -76,12 +76,12 @@ resource "aws_vpc_security_group_egress_rule" "allow_on_443" {
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_on_5432" {
-  description       = "Allow outgoing connections on 5432 to rds postgres database"
-  security_group_id = aws_security_group.the-wedding-game-api-sg.id
+  description                  = "Allow outgoing connections on 5432 to rds postgres database"
+  security_group_id            = aws_security_group.the-wedding-game-api-sg.id
   referenced_security_group_id = aws_security_group.connect_to_postgres.id
-  from_port         = 5432
-  ip_protocol       = "tcp"
-  to_port           = 5432
+  from_port                    = 5432
+  ip_protocol                  = "tcp"
+  to_port                      = 5432
 
   tags = {
     Project = "the-wedding-game"
