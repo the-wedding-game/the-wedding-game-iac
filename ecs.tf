@@ -20,7 +20,7 @@ resource "aws_ecs_service" "the-wedding-game-ecs-service-api" {
   enable_ecs_managed_tags = true
   network_configuration {
     subnets          = [aws_subnet.the-wedding-game-private-subnet_1.id]
-    security_groups  = [aws_security_group.the-wedding-group-api-sg.id]
+    security_groups  = [aws_security_group.the-wedding-game-api-sg.id]
     assign_public_ip = false
   }
   load_balancer {
@@ -36,8 +36,8 @@ resource "aws_ecs_service" "the-wedding-game-ecs-service-api" {
   }
 }
 
-resource "aws_security_group" "the-wedding-group-api-sg" {
-  name        = "the-wedding-group-api-sg"
+resource "aws_security_group" "the-wedding-game-api-sg" {
+  name        = "the-wedding-game-api-sg"
   description = "Accepts connections on 8080. Allows on 443."
   vpc_id      = aws_vpc.the-wedding-game-vpc.id
 
@@ -49,7 +49,7 @@ resource "aws_security_group" "the-wedding-group-api-sg" {
 
 resource "aws_vpc_security_group_ingress_rule" "accept-on-8080" {
   description                  = "Allow incoming connections on port 8080 from the ELB"
-  security_group_id            = aws_security_group.the-wedding-group-api-sg.id
+  security_group_id            = aws_security_group.the-wedding-game-api-sg.id
   from_port                    = 8080
   ip_protocol                  = "tcp"
   to_port                      = 8080
@@ -63,7 +63,7 @@ resource "aws_vpc_security_group_ingress_rule" "accept-on-8080" {
 
 resource "aws_vpc_security_group_egress_rule" "allow_on_443" {
   description       = "Allow outgoing connections on 443 to anywhere"
-  security_group_id = aws_security_group.the-wedding-group-api-sg.id
+  security_group_id = aws_security_group.the-wedding-game-api-sg.id
   cidr_ipv4         = "0.0.0.0/0"
   from_port         = 443
   ip_protocol       = "tcp"
@@ -76,12 +76,12 @@ resource "aws_vpc_security_group_egress_rule" "allow_on_443" {
 }
 
 resource "aws_vpc_security_group_egress_rule" "allow_on_5432" {
-  description       = "Allow outgoing connections on 5432 from anywhere"
-  security_group_id = aws_security_group.the-wedding-group-api-sg.id
-  cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 5432
-  ip_protocol       = "tcp"
-  to_port           = 5432
+  description                  = "Allow outgoing connections on 5432 to rds postgres database"
+  security_group_id            = aws_security_group.the-wedding-game-api-sg.id
+  referenced_security_group_id = aws_security_group.connect_to_postgres.id
+  from_port                    = 5432
+  ip_protocol                  = "tcp"
+  to_port                      = 5432
 
   tags = {
     Project = "the-wedding-game"
