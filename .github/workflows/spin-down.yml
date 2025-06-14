@@ -11,7 +11,7 @@ on:
         description: 'Image hash to use'
         required: true
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 0,6,12,18 * * *'
 
 
 env:
