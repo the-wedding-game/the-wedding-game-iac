@@ -71,7 +71,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_on_5432" {
 
 resource "aws_db_subnet_group" "the-wedding-game-db-subnet-group" {
   name       = "the-wedding-game-db-subnet-group"
-  subnet_ids = [aws_subnet.the-wedding-game-private-subnet_1.id]
+  subnet_ids = [aws_subnet.the-wedding-game-private-subnet_1.id, aws_subnet.the-wedding-game-private-subnet_2.id]
 
   tags = {
     Project = "the-wedding-game"
