@@ -56,9 +56,9 @@ resource "aws_security_group" "connect_to_postgres" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "allow_on_5432" {
-  description       = "Allow connections on port 5432 from anywhere"
+  description       = "Allow connections on port 5432 from api security group"
   security_group_id = aws_security_group.connect_to_postgres.id
-  cidr_ipv4         = "0.0.0.0/0"
+  referenced_security_group_id = aws_security_group.the-wedding-game-api-sg.id
   from_port         = 5432
   ip_protocol       = "tcp"
   to_port           = 5432
@@ -71,7 +71,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_on_5432" {
 
 resource "aws_db_subnet_group" "the-wedding-game-db-subnet-group" {
   name       = "the-wedding-game-db-subnet-group"
-  subnet_ids = [aws_subnet.the-wedding-game-public-subnet_1.id, aws_subnet.the-wedding-game-public-subnet_2.id]
+  subnet_ids = [aws_subnet.the-wedding-game-private-subnet_1.id]
 
   tags = {
     Project = "the-wedding-game"

@@ -6,7 +6,11 @@ terraform {
     }
   }
 
-  backend "s3" {}
+  backend "s3" {
+    bucket = "the-wedding-game"
+    key    = "terraform/state/terraform.tfstate"
+    region = "eu-west-1"
+  }
 
   required_version = "~> 1.12.1"
 }
