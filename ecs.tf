@@ -19,10 +19,9 @@ resource "aws_ecs_service" "the-wedding-game-ecs-service-api" {
   launch_type             = "FARGATE"
   enable_ecs_managed_tags = true
   network_configuration {
-    subnets          = [aws_subnet.the-wedding-game-public-subnet_1.id, aws_subnet.the-wedding-game-public-subnet_2.id]
+    subnets          = [aws_subnet.the-wedding-game-private-subnet_1.id]
     security_groups  = [aws_security_group.the-wedding-group-api-sg.id]
-    //TODO: make assign public ip false. Route through NAT
-    assign_public_ip = true
+    assign_public_ip = false
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.the-wedding-game-api-ecs-target-group.arn
