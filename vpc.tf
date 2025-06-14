@@ -41,7 +41,7 @@ resource "aws_subnet" "the-wedding-game-public-subnet_1" {
 
   tags = {
     Project = "the-wedding-game"
-    Name    = "the-wedding-game-subnet"
+    Name    = "the-wedding-game-public-subnet-1"
   }
 }
 
@@ -53,7 +53,7 @@ resource "aws_subnet" "the-wedding-game-public-subnet_2" {
 
   tags = {
     Project = "the-wedding-game"
-    Name    = "the-wedding-game-subnet"
+    Name    = "the-wedding-game-public-subnet-2"
   }
 }
 
@@ -98,10 +98,21 @@ resource "aws_subnet" "the-wedding-game-private-subnet_1" {
 
   tags = {
     Project = "the-wedding-game"
-    Name    = "the-wedding-game-subnet"
+    Name    = "the-wedding-game-private-subnet-1"
   }
 }
 
+resource "aws_subnet" "the-wedding-game-private-subnet_2" {
+  vpc_id                  = aws_vpc.the-wedding-game-vpc.id
+  cidr_block              = "10.0.4.0/24"
+  map_public_ip_on_launch = false
+  availability_zone       = "eu-west-1b"
+
+  tags = {
+    Project = "the-wedding-game"
+    Name    = "the-wedding-game-private-subnet-2"
+  }
+}
 resource "aws_route_table" "the-wedding-game-private-rt" {
   vpc_id = aws_vpc.the-wedding-game-vpc.id
 
@@ -122,6 +133,8 @@ resource "aws_route_table_association" "the-wedding-game-private-rta_1" {
 }
 
 resource "aws_eip" "the-wedding-game-nat-eip" {
+  #checkov:skip=CKV2_AWS_19: EIP is attached to a NAT Gateway, not an EC2 instance
+
   tags = {
     Project = "the-wedding-game"
     Name    = "the-wedding-game-nat-eip"
