@@ -147,7 +147,7 @@ resource "aws_wafv2_web_acl" "the-wedding-game-lb-waf-acl" {
       metric_name                = "AWSManagedRulesKnownBadInputsRuleSet-Metric"
     }
     override_action {
-      count {}
+      none {}
     }
   }
 
@@ -166,7 +166,7 @@ resource "aws_wafv2_web_acl" "the-wedding-game-lb-waf-acl" {
       metric_name                = "AWSManagedRulesAnonymousIpList-Metric"
     }
     override_action {
-      count {}
+      none {}
     }
   }
 

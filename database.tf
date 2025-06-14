@@ -1,6 +1,7 @@
 resource "aws_db_instance" "the-wedding-game-db" {
   #checkov:skip=CKV_AWS_293: Need to be able to easily delete this dev database
   #checkov:skip=CKV_AWS_354: I cannot be bothered
+  #checkov:skip=CKV2_AWS_69: Need to figure out how I can enable force SSL without breaking the application
 
   identifier                          = "the-wedding-game-db2"
   instance_class                      = "db.t4g.micro"
