@@ -87,12 +87,12 @@ resource "aws_iam_role" "the-wedding-game-rds-monitoring-role" {
           "Service" : "monitoring.rds.amazonaws.com"
         },
         "Action" : "sts:AssumeRole",
-        "Condition": {
-          "StringLike": {
-            "aws:SourceArn": "arn:aws:rds:eu-west-1:996835183634:db:the-wedding-game-db2"
+        "Condition" : {
+          "StringLike" : {
+            "aws:SourceArn" : "arn:aws:rds:eu-west-1:996835183634:db:the-wedding-game-db2"
           },
-          "StringEquals": {
-            "aws:SourceAccount": "996835183634"
+          "StringEquals" : {
+            "aws:SourceAccount" : "996835183634"
           }
         }
       }

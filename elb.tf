@@ -24,7 +24,7 @@ resource "aws_lb" "the-wedding-game-api-lb" {
 resource "aws_lb_target_group" "the-wedding-game-api-ecs-target-group" {
   name        = "the-wedding-game-tg"
   port        = 8080
-  protocol    = "HTTPS"
+  protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = aws_vpc.the-wedding-game-vpc.id
 
@@ -142,9 +142,9 @@ resource "aws_wafv2_web_acl" "the-wedding-game-lb-waf-acl" {
       }
     }
     visibility_config {
-      sampled_requests_enabled = true
+      sampled_requests_enabled   = true
       cloudwatch_metrics_enabled = true
-      metric_name = "AWSManagedRulesKnownBadInputsRuleSet-Metric"
+      metric_name                = "AWSManagedRulesKnownBadInputsRuleSet-Metric"
     }
     override_action {
       count {}

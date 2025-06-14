@@ -49,12 +49,12 @@ resource "aws_security_group" "the-wedding-group-api-sg" {
 }
 
 resource "aws_vpc_security_group_ingress_rule" "accept-on-8080" {
-  description       = "Allow incoming connections on port 8080 from anywhere"
+  description       = "Allow incoming connections on port 8080 from the ELB"
   security_group_id = aws_security_group.the-wedding-group-api-sg.id
-  cidr_ipv4         = "0.0.0.0/0"
   from_port         = 8080
   ip_protocol       = "tcp"
   to_port           = 8080
+  referenced_security_group_id = aws_security_group.the-wedding-game-api-elb-sg.id
 
   tags = {
     Project = "the-wedding-game"
