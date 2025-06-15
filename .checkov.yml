@@ -8,6 +8,8 @@ skip-check:
   - CKV2_AWS_12
   - CKV2_AWS_19 #Ensure that all EIP addresses allocated to a VPC are attached to EC2 instances. EIP is already attached to NAT Gateway.
   - CKV2_AWS_69 #TODO: Ensure AWS RDS database instance configured with encryption in transit. Need to enable figure out how I can turn this on
+  - CKV_AWS_157 #Ensure that RDS instances have Multi-AZ enabled. Keeping RDS instance as single AZ for cheapness
+
 
 external-checks-dir:
   - ./.checkov

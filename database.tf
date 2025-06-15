@@ -2,6 +2,7 @@ resource "aws_db_instance" "the-wedding-game-db" {
   #checkov:skip=CKV_AWS_293: Need to be able to easily delete this dev database
   #checkov:skip=CKV_AWS_354: I cannot be bothered
   #checkov:skip=CKV2_AWS_69: Need to figure out how I can enable force SSL without breaking the application
+  #checkov:skip=CKV_AWS_157: Keeping RDS instance as single AZ for cheapness
 
   identifier                          = "the-wedding-game-db2"
   instance_class                      = "db.t4g.micro"
@@ -24,7 +25,7 @@ resource "aws_db_instance" "the-wedding-game-db" {
   monitoring_role_arn                 = aws_iam_role.the-wedding-game-rds-monitoring-role.arn
   iam_database_authentication_enabled = true
   performance_insights_enabled        = true
-  multi_az                            = true
+  multi_az                            = false
   copy_tags_to_snapshot               = true
 
   lifecycle {
