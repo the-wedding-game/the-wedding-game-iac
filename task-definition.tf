@@ -76,8 +76,8 @@ resource "aws_ecs_task_definition" "the-wedding-game-api-task-definition" {
       ]
     }
   ])
-  memory                   = "3072"
-  cpu                      = "1024"
+  memory                   = "512"
+  cpu                      = "256"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
   execution_role_arn       = aws_iam_role.the-wedding-game-role-ecs-task-execute.arn
